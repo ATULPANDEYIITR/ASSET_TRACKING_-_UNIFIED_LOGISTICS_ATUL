@@ -1,0 +1,21 @@
+﻿{
+  "sources": [
+    {
+      "id": "atul-json-test",
+      "name": "ATUL External JSON Test Source",
+      "type": "http_json",
+      "url": "https://jsonplaceholder.typicode.com/posts",
+      "method": "GET",
+      "headers": {},
+      "params": {},
+      "timeout": 30,
+      "enabled": true,
+      "schedule_minutes": 5,
+      "asset_mapping": {
+        "asset_code": "id",
+        "name": "title",
+        "description": "body"
+      }
+    }
+  ]
+}

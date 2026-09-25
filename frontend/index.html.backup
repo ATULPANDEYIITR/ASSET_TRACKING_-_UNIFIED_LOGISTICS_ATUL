@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATUL | Asset Tracking & Unified Logistics</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div>
+        <div class="brand">ATUL</div>
+        <div class="subtitle">
+            Asset Tracking & Unified Logistics
+        </div>
+    </div>
+
+    <div class="connection">
+        <span id="statusDot"></span>
+        <span id="systemStatus">Connecting...</span>
+    </div>
+</header>
+
+
+<main class="dashboard">
+
+    <section class="hero">
+        <div>
+            <p class="eyebrow">COMMAND CENTER</p>
+            <h1>Asset Intelligence Portal</h1>
+            <p>
+                Centralized visibility across assets, locations,
+                ownership, value and operational status.
+            </p>
+        </div>
+    </section>
+
+
+    <section class="cards">
+
+        <div class="card">
+            <span class="label">TOTAL ASSETS</span>
+            <strong id="totalAssets">0</strong>
+        </div>
+
+        <div class="card">
+            <span class="label">ACTIVE</span>
+            <strong id="activeAssets">0</strong>
+        </div>
+
+        <div class="card">
+            <span class="label">MAINTENANCE</span>
+            <strong id="maintenanceAssets">0</strong>
+        </div>
+
+        <div class="card">
+            <span class="label">LOCATIONS</span>
+            <strong id="locations">0</strong>
+        </div>
+
+    </section>
+
+
+    <section class="panel">
+
+        <div class="panel-header">
+            <div>
+                <h2>Asset Registry</h2>
+                <p>Live data from the ATUL API</p>
+            </div>
+
+            <button onclick="loadAssets()">
+                Refresh
+            </button>
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Asset Code</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Location</th>
+                        <th>Owner</th>
+                        <th>Current Value</th>
+                    </tr>
+                </thead>
+
+                <tbody id="assetTable">
+                    <tr>
+                        <td colspan="7">
+                            Loading assets...
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,612 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATUL | Intelligence Command Center</title>
+<link rel="stylesheet" href="command/command-center.css">
+</head>
+
+<body>
+
+<div class="scanline"></div>
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+            <div class="brand-name">ATUL</div>
+            <div class="brand-subtitle">
+                ASSET TRACKING & UNIFIED LOGISTICS
+            </div>
+        </div>
+    </div>
+
+    <div class="system-status">
+        <span class="status-dot"></span>
+        <span id="systemStatus">SYSTEM ONLINE</span>
+    </div>
+
+    <div class="top-actions">
+        <button id="refreshButton">REFRESH</button>
+        <button id="fullscreenButton">FULLSCREEN</button>
+        <button id="themeButton">THEME</button>
+    </div>
+
+</header>
+
+<nav class="navigation">
+
+    <button class="nav-button active" data-section="overview">
+        OVERVIEW
+    </button>
+
+    <button class="nav-button" data-section="assets">
+        ASSETS
+    </button>
+
+    <button class="nav-button" data-section="sources">
+        SOURCES
+    </button>
+
+    <button class="nav-button" data-section="sync">
+        SYNCHRONIZATION
+    </button>
+
+    <button class="nav-button" data-section="audit">
+        AUDIT
+    </button>
+
+    <button class="nav-button" data-section="health">
+        SYSTEM HEALTH
+    </button>
+
+</nav>
+
+<main>
+
+<section id="overview" class="dashboard-section active">
+
+    <div class="hero">
+
+        <div>
+            <div class="eyebrow">CENTRAL OPERATIONS PLATFORM</div>
+
+            <h1>
+                INTELLIGENCE
+                <span>COMMAND CENTER</span>
+            </h1>
+
+            <p>
+                Real-time asset visibility, synchronization monitoring,
+                operational intelligence and system health.
+            </p>
+        </div>
+
+        <div class="live-clock">
+            <div id="liveClock">--:--:--</div>
+            <small id="lastUpdated">Waiting for data...</small>
+        </div>
+
+    </div>
+
+    <div class="kpi-grid">
+
+        <div class="kpi">
+            <span>TOTAL ASSETS</span>
+            <strong id="totalAssets">0</strong>
+            <small>REGISTERED</small>
+        </div>
+
+        <div class="kpi">
+            <span>ACTIVE</span>
+            <strong id="activeAssets">0</strong>
+            <small>OPERATIONAL</small>
+        </div>
+
+        <div class="kpi">
+            <span>MAINTENANCE</span>
+            <strong id="maintenanceAssets">0</strong>
+            <small>REQUIRING ATTENTION</small>
+        </div>
+
+        <div class="kpi">
+            <span>LOCATIONS</span>
+            <strong id="locationCount">0</strong>
+            <small>ACTIVE LOCATIONS</small>
+        </div>
+
+        <div class="kpi">
+            <span>OWNERS</span>
+            <strong id="ownerCount">0</strong>
+            <small>RESPONSIBLE GROUPS</small>
+        </div>
+
+        <div class="kpi">
+            <span>ASSET TYPES</span>
+            <strong id="typeCount">0</strong>
+            <small>CATEGORIES</small>
+        </div>
+
+        <div class="kpi">
+            <span>SYNC JOBS</span>
+            <strong id="syncCount">0</strong>
+            <small>RECORDED</small>
+        </div>
+
+        <div class="kpi">
+            <span>AUDIT EVENTS</span>
+            <strong id="auditCount">0</strong>
+            <small>TRACKED</small>
+        </div>
+
+    </div>
+
+    <div class="panel-grid">
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <h2>FINANCIAL INTELLIGENCE</h2>
+                <span class="panel-live">LIVE</span>
+            </div>
+
+            <div class="financial-grid">
+
+                <div>
+                    <span>PURCHASE VALUE</span>
+                    <strong id="purchaseValue">0</strong>
+                </div>
+
+                <div>
+                    <span>CURRENT VALUE</span>
+                    <strong id="currentValue">0</strong>
+                </div>
+
+                <div>
+                    <span>VALUE CHANGE</span>
+                    <strong id="valueChange">0</strong>
+                </div>
+
+                <div>
+                    <span>DEPRECIATION</span>
+                    <strong id="depreciation">0</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <h2>SYNCHRONIZATION HEALTH</h2>
+                <span class="panel-live">MONITORED</span>
+            </div>
+
+            <div class="health-meter">
+
+                <div class="meter-label">
+                    <span>SUCCESSFUL</span>
+                    <strong id="syncSuccess">0</strong>
+                </div>
+
+                <div class="meter">
+                    <div id="syncSuccessBar"></div>
+                </div>
+
+                <div class="meter-label">
+                    <span>FAILED</span>
+                    <strong id="syncFailed">0</strong>
+                </div>
+
+                <div class="meter failed-meter">
+                    <div id="syncFailedBar"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <h2>RECENT ACTIVITY</h2>
+            <button id="exportActivity">EXPORT</button>
+        </div>
+
+        <div id="activityTimeline" class="timeline"></div>
+
+    </div>
+
+</section>
+
+<section id="assets" class="dashboard-section">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="eyebrow">REGISTRY</div>
+            <h2>ASSET INTELLIGENCE</h2>
+        </div>
+
+        <div class="search-box">
+            <input
+                id="assetSearch"
+                type="search"
+                placeholder="Search assets..."
+            >
+        </div>
+
+    </div>
+
+    <div class="asset-summary">
+
+        <div class="mini-card">
+            <span>VISIBLE</span>
+            <strong id="visibleAssets">0</strong>
+        </div>
+
+        <div class="mini-card">
+            <span>ACTIVE</span>
+            <strong id="assetActiveMini">0</strong>
+        </div>
+
+        <div class="mini-card">
+            <span>MAINTENANCE</span>
+            <strong id="assetMaintenanceMini">0</strong>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ASSET CODE</th>
+                        <th>NAME</th>
+                        <th>TYPE</th>
+                        <th>STATUS</th>
+                        <th>LOCATION</th>
+                        <th>OWNER</th>
+                        <th>VALUE</th>
+                    </tr>
+                </thead>
+
+                <tbody id="assetTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="sources" class="dashboard-section">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="eyebrow">INTEGRATION NETWORK</div>
+            <h2>CONNECTED SOURCES</h2>
+        </div>
+
+        <button id="addSourceButton" class="primary-button">
+            + ADD SOURCE
+        </button>
+
+    </div>
+
+    <div class="source-summary">
+
+        <div class="mini-card">
+            <span>TOTAL SOURCES</span>
+            <strong id="sourceTotal">0</strong>
+        </div>
+
+        <div class="mini-card">
+            <span>ONLINE</span>
+            <strong id="sourceOnline">0</strong>
+        </div>
+
+        <div class="mini-card">
+            <span>OFFLINE</span>
+            <strong id="sourceOffline">0</strong>
+        </div>
+
+        <div class="mini-card">
+            <span>ENABLED</span>
+            <strong id="sourceEnabled">0</strong>
+        </div>
+
+    </div>
+
+    <div id="sourceGrid" class="source-grid"></div>
+
+</section>
+
+<section id="sync" class="dashboard-section">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="eyebrow">DATA MOVEMENT</div>
+            <h2>SYNCHRONIZATION CENTER</h2>
+        </div>
+
+        <button id="syncAllButton" class="primary-button">
+            SYNC ALL
+        </button>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>TIME</th>
+                        <th>SOURCE</th>
+                        <th>TYPE</th>
+                        <th>STATUS</th>
+                        <th>FOUND</th>
+                        <th>CREATED</th>
+                        <th>UPDATED</th>
+                        <th>FAILED</th>
+                        <th>MESSAGE</th>
+                    </tr>
+                </thead>
+
+                <tbody id="syncTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="audit" class="dashboard-section">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="eyebrow">TRACEABILITY</div>
+            <h2>AUDIT INTELLIGENCE</h2>
+        </div>
+
+        <button id="exportAudit" class="primary-button">
+            EXPORT AUDIT
+        </button>
+
+    </div>
+
+    <div class="audit-filters">
+
+        <input
+            id="auditSearch"
+            type="search"
+            placeholder="Filter audit events..."
+        >
+
+        <select id="auditAction">
+            <option value="">ALL ACTIONS</option>
+            <option value="CREATE">CREATE</option>
+            <option value="UPDATE">UPDATE</option>
+            <option value="DELETE">DELETE</option>
+            <option value="SYNC">SYNC</option>
+        </select>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>TIME</th>
+                        <th>ACTION</th>
+                        <th>ENTITY</th>
+                        <th>ASSET</th>
+                        <th>SOURCE</th>
+                        <th>DESCRIPTION</th>
+                    </tr>
+                </thead>
+
+                <tbody id="auditTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="health" class="dashboard-section">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="eyebrow">INFRASTRUCTURE</div>
+            <h2>SYSTEM HEALTH</h2>
+        </div>
+
+        <button id="healthRefresh" class="primary-button">
+            RUN HEALTH CHECK
+        </button>
+
+    </div>
+
+    <div class="health-grid">
+
+        <div class="health-card">
+            <span>API</span>
+            <strong id="healthApi">CHECKING</strong>
+            <small>FASTAPI SERVICE</small>
+        </div>
+
+        <div class="health-card">
+            <span>DATABASE</span>
+            <strong id="healthDatabase">CHECKING</strong>
+            <small>POSTGRESQL</small>
+        </div>
+
+        <div class="health-card">
+            <span>ASSET STORE</span>
+            <strong id="healthAssets">0</strong>
+            <small>RECORDS</small>
+        </div>
+
+        <div class="health-card">
+            <span>AUDIT STORE</span>
+            <strong id="healthAudit">0</strong>
+            <small>EVENTS</small>
+        </div>
+
+        <div class="health-card">
+            <span>SYNC STORE</span>
+            <strong id="healthSync">0</strong>
+            <small>RECORDS</small>
+        </div>
+
+        <div class="health-card">
+            <span>LAST CHECK</span>
+            <strong id="healthTime">--</strong>
+            <small>SYSTEM TIME</small>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-header">
+            <h2>OPERATIONAL CAPABILITIES</h2>
+        </div>
+
+        <div class="capability-grid">
+
+            <div>✓ Asset Registry</div>
+            <div>✓ Asset Search</div>
+            <div>✓ Asset Filtering</div>
+            <div>✓ Asset Statistics</div>
+            <div>✓ Source Registry</div>
+            <div>✓ HTTP Integration</div>
+            <div>✓ Web Scraping</div>
+            <div>✓ Change Detection</div>
+            <div>✓ Synchronization Engine</div>
+            <div>✓ Scheduler</div>
+            <div>✓ Audit Trail</div>
+            <div>✓ PostgreSQL</div>
+            <div>✓ API Monitoring</div>
+            <div>✓ Data Export</div>
+            <div>✓ Real-Time Refresh</div>
+            <div>✓ Operational Dashboard</div>
+            <div>✓ Financial Intelligence</div>
+            <div>✓ Source Monitoring</div>
+            <div>✓ Error Monitoring</div>
+            <div>✓ System Health</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<div id="notification" class="notification"></div>
+
+<div id="sourceModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>ADD DATA SOURCE</h2>
+            <button id="closeSourceModal">×</button>
+        </div>
+
+        <form id="sourceForm">
+
+            <label>
+                Source ID
+                <input id="sourceId" required>
+            </label>
+
+            <label>
+                Source Name
+                <input id="sourceName" required>
+            </label>
+
+            <label>
+                Source Type
+                <select id="sourceType">
+                    <option value="http_json">HTTP JSON</option>
+                    <option value="http">HTTP</option>
+                    <option value="scraper">WEB SCRAPER</option>
+                </select>
+            </label>
+
+            <label>
+                URL
+                <input id="sourceUrl" type="url" required>
+            </label>
+
+            <label>
+                Schedule Minutes
+                <input id="sourceSchedule" type="number" min="1" value="5">
+            </label>
+
+            <label>
+                Asset Code Field
+                <input id="mapAssetCode" value="id">
+            </label>
+
+            <label>
+                Asset Name Field
+                <input id="mapAssetName" value="title">
+            </label>
+
+            <label>
+                Description Field
+                <input id="mapDescription" value="body">
+            </label>
+
+            <div class="form-actions">
+
+                <button type="button" id="cancelSource">
+                    CANCEL
+                </button>
+
+                <button type="submit" class="primary-button">
+                    CREATE SOURCE
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="command/command-center.js"></script>
+
+</body>
+</html>

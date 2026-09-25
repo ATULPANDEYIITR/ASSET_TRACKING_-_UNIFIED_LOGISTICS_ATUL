@@ -1,0 +1,147 @@
+﻿from backend.app.api import events as events_api
+from backend.app.api import realtime as realtime_api
+from backend.app.api import intelligence as intelligence_api
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from backend.app.api.assets import router as assets_router
+from backend.app.api.audit import router as audit_router
+from backend.app.api.sync import router as sync_router
+from backend.app.api.system import router as system_router
+from backend.app.api.automation import router as automation_router
+from backend.app.api.intelligence import router as intelligence_router
+from backend.app.api.scheduler import router as scheduler_router
+
+from backend.app.tasks.scheduler import (
+    start_scheduler,
+    stop_scheduler,
+)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    start_scheduler()
+
+    yield
+
+    stop_scheduler()
+
+
+app = FastAPI(
+    title="ATUL - Asset Tracking & Unified Logistics",
+    description=(
+        "World-class centralized asset tracking, "
+        "logistics management, synchronization, "
+        "automation, monitoring and analytics platform."
+    ),
+    version="0.5.0",
+    lifespan=lifespan,
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+app.include_router(
+    assets_router,
+    prefix="/api/v1/assets",
+    tags=["Assets"],
+)
+
+app.include_router(
+    audit_router,
+    prefix="/api/v1/audit",
+    tags=["Audit"],
+)
+
+app.include_router(
+    sync_router,
+    prefix="/api/v1/synchronization",
+    tags=["Synchronization"],
+)
+
+app.include_router(
+    system_router,
+    prefix="/api/v1/system",
+    tags=["System"],
+)
+
+app.include_router(
+    automation_router,
+    prefix="/api/v1/automation",
+    tags=["Automation"],
+)
+
+app.include_router(
+    scheduler_router,
+    prefix="/api/v1/automation",
+    tags=["Scheduler"],
+)
+
+
+@app.get("/")
+def root():
+    return {
+        "application": "ATUL",
+        "full_name": (
+            "Asset Tracking & Unified Logistics"
+        ),
+        "status": "online",
+        "version": "0.8.2",
+        "automation": "enabled",
+        "integration_engine": "enabled",
+        "change_detection": "enabled",
+    }
+
+
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy",
+        "service": "ATUL API",
+    }
+
+
+@app.get("/api/v1/health/database")
+def database_health():
+    from sqlalchemy import text
+    from backend.app.db.database import engine
+
+    try:
+        with engine.connect() as connection:
+            connection.execute(
+                text("SELECT 1")
+            )
+
+        return {
+            "status": "healthy",
+            "database": "PostgreSQL",
+            "connection": "successful",
+        }
+
+    except Exception as exc:
+        return {
+            "status": "unhealthy",
+            "database": "PostgreSQL",
+            "connection": "failed",
+            "error": str(exc),
+        }
+
+app.include_router(intelligence_api.router)
+
+app.include_router(events_api.router)
+app.include_router(realtime_api.router)
+

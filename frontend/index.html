@@ -1,0 +1,1076 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ATUL | Asset Tracking & Unified Logistics</title>
+
+    <meta
+        name="description"
+        content="ATUL Asset Tracking & Unified Logistics Command Center"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+<div id="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark">A</div>
+
+            <div>
+                <div class="brand-name">ATUL</div>
+                <div class="brand-subtitle">
+                    Asset Tracking & Unified Logistics
+                </div>
+            </div>
+        </div>
+
+        <div class="live-status">
+            <span class="pulse"></span>
+            <span id="liveText">LIVE SYSTEM</span>
+        </div>
+
+        <nav id="mainNav">
+
+            <button
+                class="nav-item active"
+                data-view="dashboard"
+            >
+                <span>◆</span>
+                Dashboard
+            </button>
+
+            <button
+                class="nav-item"
+                data-view="assets"
+            >
+                <span>▣</span>
+                Assets
+            </button>
+
+            <button
+                class="nav-item"
+                data-view="sources"
+            >
+                <span>◎</span>
+                Sources
+            </button>
+
+            <button
+                class="nav-item"
+                data-view="sync"
+            >
+                <span>↻</span>
+                Synchronization
+            </button>
+
+            <button
+                class="nav-item"
+                data-view="audit"
+            >
+                <span>◈</span>
+                Audit
+            </button>
+
+            <button
+                class="nav-item"
+                data-view="health"
+            >
+                <span>♥</span>
+                System Health
+            </button>
+
+            <button
+                class="nav-item"
+                data-view="settings"
+            >
+                <span>⚙</span>
+                Settings
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="mini-label">BACKEND</div>
+            <div id="backendStatus" class="status-text">
+                Checking...
+            </div>
+
+            <div class="mini-label">DATABASE</div>
+            <div id="databaseStatus" class="status-text">
+                Checking...
+            </div>
+
+            <div class="mini-label">VERSION</div>
+            <div id="versionText">
+                --
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    id="mobileMenu"
+                    class="mobile-menu"
+                >
+                    ☰
+                </button>
+
+                <div>
+                    <div class="eyebrow">
+                        CENTRAL OPERATIONS
+                    </div>
+
+                    <h1 id="pageTitle">
+                        Command Center
+                    </h1>
+                </div>
+
+            </div>
+
+            <div class="topbar-actions">
+
+                <div
+                    id="connectionBadge"
+                    class="connection-badge"
+                >
+                    <span class="pulse"></span>
+                    CONNECTING
+                </div>
+
+                <button
+                    id="refreshBtn"
+                    class="button primary"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="command-strip">
+
+            <div class="global-search">
+
+                <span>⌕</span>
+
+                <input
+                    id="globalSearch"
+                    type="search"
+                    placeholder="Search assets, sources, owners, locations..."
+                    autocomplete="off"
+                >
+
+                <kbd>CTRL K</kbd>
+
+            </div>
+
+            <div class="command-actions">
+
+                <button
+                    class="button"
+                    id="runAllBtn"
+                >
+                    ▶ Sync All
+                </button>
+
+                <button
+                    class="button"
+                    id="addAssetBtn"
+                >
+                    + Asset
+                </button>
+
+                <button
+                    class="button"
+                    id="addSourceBtn"
+                >
+                    + Source
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section id="viewContainer">
+
+            <!-- =================================================
+                 DASHBOARD
+                 ================================================= -->
+
+            <section
+                id="view-dashboard"
+                class="view active-view"
+            >
+
+                <div class="hero">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            ATUL OPERATIONS INTELLIGENCE
+                        </div>
+
+                        <h2>
+                            Asset Tracking &
+                            Unified Logistics
+                        </h2>
+
+                        <p>
+                            Centralized visibility across
+                            assets, sources, synchronization,
+                            ownership, locations, value,
+                            automation and operational health.
+                        </p>
+
+                    </div>
+
+                    <div class="hero-status">
+                        <div class="hero-status-label">
+                            SYSTEM STATUS
+                        </div>
+
+                        <div
+                            id="heroSystemStatus"
+                            class="hero-status-value"
+                        >
+                            ONLINE
+                        </div>
+
+                        <div id="lastRefresh">
+                            Last refresh: --
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="kpiGrid"
+                    class="kpi-grid"
+                ></div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel large">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <div class="panel-title">
+                                    Asset Intelligence
+                                </div>
+
+                                <div class="panel-subtitle">
+                                    Current operational distribution
+                                </div>
+                            </div>
+
+                            <button
+                                class="button small"
+                                data-view-button="assets"
+                            >
+                                View Assets
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="assetAnalytics"
+                            class="analytics-grid"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <div class="panel-title">
+                                    Integration Health
+                                </div>
+
+                                <div class="panel-subtitle">
+                                    Connected source status
+                                </div>
+                            </div>
+
+                            <button
+                                class="button small"
+                                data-view-button="sources"
+                            >
+                                Sources
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="sourceAnalytics"
+                            class="health-list"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <div class="panel-title">
+                                    Synchronization Activity
+                                </div>
+
+                                <div class="panel-subtitle">
+                                    Recent integration operations
+                                </div>
+                            </div>
+
+                            <button
+                                class="button small"
+                                data-view-button="sync"
+                            >
+                                History
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="syncActivity"
+                            class="activity-list"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <div class="panel-title">
+                                    Live Activity
+                                </div>
+
+                                <div class="panel-subtitle">
+                                    System events
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="liveActivity"
+                            class="activity-list"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ASSETS
+                 ================================================= -->
+
+            <section
+                id="view-assets"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+                        <div class="eyebrow">
+                            ASSET REGISTRY
+                        </div>
+
+                        <h2>Assets</h2>
+
+                        <p>
+                            Search, monitor, create,
+                            update and export assets.
+                        </p>
+                    </div>
+
+                    <div class="button-row">
+
+                        <button
+                            class="button"
+                            id="importCsvBtn"
+                        >
+                            Import CSV
+                        </button>
+
+                        <button
+                            class="button"
+                            id="exportCsvBtn"
+                        >
+                            Export CSV
+                        </button>
+
+                        <button
+                            class="button"
+                            id="exportJsonBtn"
+                        >
+                            Export JSON
+                        </button>
+
+                        <button
+                            class="button"
+                            id="printAssetsBtn"
+                        >
+                            Print
+                        </button>
+
+                        <button
+                            class="button primary"
+                            id="assetsAddBtn"
+                        >
+                            + Add Asset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    id="csvInput"
+                    type="file"
+                    accept=".csv"
+                    hidden
+                >
+
+
+                <div class="filter-panel">
+
+                    <input
+                        id="assetSearch"
+                        class="filter-input"
+                        placeholder="Search assets..."
+                    >
+
+                    <select
+                        id="assetStatusFilter"
+                        class="filter-input"
+                    >
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="retired">Retired</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+
+                    <input
+                        id="assetTypeFilter"
+                        class="filter-input"
+                        placeholder="Type"
+                    >
+
+                    <input
+                        id="locationFilter"
+                        class="filter-input"
+                        placeholder="Location"
+                    >
+
+                    <input
+                        id="ownerFilter"
+                        class="filter-input"
+                        placeholder="Owner"
+                    >
+
+                    <input
+                        id="minValueFilter"
+                        class="filter-input"
+                        type="number"
+                        placeholder="Min value"
+                    >
+
+                    <input
+                        id="maxValueFilter"
+                        class="filter-input"
+                        type="number"
+                        placeholder="Max value"
+                    >
+
+                    <select
+                        id="assetSort"
+                        class="filter-input"
+                    >
+                        <option value="id">Sort: ID</option>
+                        <option value="name">Sort: Name</option>
+                        <option value="value">Sort: Value</option>
+                        <option value="status">Sort: Status</option>
+                        <option value="location">Sort: Location</option>
+                    </select>
+
+                    <button
+                        class="button"
+                        id="resetAssetFilters"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="assetTable"
+                    class="table-panel"
+                ></div>
+
+
+                <div class="pagination">
+
+                    <button
+                        class="button small"
+                        id="assetPrev"
+                    >
+                        ← Previous
+                    </button>
+
+                    <span id="assetPageInfo">
+                        Page 1
+                    </span>
+
+                    <button
+                        class="button small"
+                        id="assetNext"
+                    >
+                        Next →
+                    </button>
+
+                    <select
+                        id="assetPageSize"
+                        class="page-size"
+                    >
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SOURCES
+                 ================================================= -->
+
+            <section
+                id="view-sources"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+                        <div class="eyebrow">
+                            INTEGRATION NETWORK
+                        </div>
+
+                        <h2>Connected Sources</h2>
+
+                        <p>
+                            Monitor websites, APIs and
+                            external data sources.
+                        </p>
+                    </div>
+
+                    <div class="button-row">
+
+                        <button
+                            class="button"
+                            id="refreshSourcesBtn"
+                        >
+                            ↻ Refresh
+                        </button>
+
+                        <button
+                            class="button primary"
+                            id="sourcesAddBtn"
+                        >
+                            + Add Source
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="filter-panel">
+
+                    <input
+                        id="sourceSearch"
+                        class="filter-input"
+                        placeholder="Search sources..."
+                    >
+
+                    <select
+                        id="sourceEnabledFilter"
+                        class="filter-input"
+                    >
+                        <option value="">All Sources</option>
+                        <option value="true">Enabled</option>
+                        <option value="false">Disabled</option>
+                    </select>
+
+                    <select
+                        id="sourceTypeFilter"
+                        class="filter-input"
+                    >
+                        <option value="">All Types</option>
+                        <option value="http_json">HTTP JSON</option>
+                        <option value="http">HTTP</option>
+                        <option value="website">Website</option>
+                    </select>
+
+                </div>
+
+
+                <div
+                    id="sourceCards"
+                    class="source-grid"
+                ></div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SYNCHRONIZATION
+                 ================================================= -->
+
+            <section
+                id="view-sync"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+                        <div class="eyebrow">
+                            DATA SYNCHRONIZATION
+                        </div>
+
+                        <h2>Synchronization Center</h2>
+
+                        <p>
+                            Track every synchronization
+                            operation and change.
+                        </p>
+                    </div>
+
+                    <button
+                        class="button primary"
+                        id="syncNowPageBtn"
+                    >
+                        ▶ Synchronize All
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="syncStats"
+                    class="mini-kpi-grid"
+                ></div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <div class="panel-title">
+                                Synchronization History
+                            </div>
+
+                            <div class="panel-subtitle">
+                                External source activity
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="syncTable"
+                        class="table-panel embedded"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 AUDIT
+                 ================================================= -->
+
+            <section
+                id="view-audit"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+                        <div class="eyebrow">
+                            GOVERNANCE
+                        </div>
+
+                        <h2>Audit Center</h2>
+
+                        <p>
+                            Track asset creation, updates,
+                            deletion and synchronization events.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="filter-panel">
+
+                    <input
+                        id="auditSearch"
+                        class="filter-input"
+                        placeholder="Asset code..."
+                    >
+
+                    <select
+                        id="auditActionFilter"
+                        class="filter-input"
+                    >
+                        <option value="">All Actions</option>
+                        <option value="CREATE">CREATE</option>
+                        <option value="UPDATE">UPDATE</option>
+                        <option value="DELETE">DELETE</option>
+                        <option value="SYNC_CREATE">SYNC_CREATE</option>
+                        <option value="SYNC_UPDATE">SYNC_UPDATE</option>
+                    </select>
+
+                </div>
+
+
+                <div
+                    id="auditTable"
+                    class="table-panel"
+                ></div>
+
+            </section>
+
+
+            <!-- =================================================
+                 HEALTH
+                 ================================================= -->
+
+            <section
+                id="view-health"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+                        <div class="eyebrow">
+                            OPERATIONS MONITOR
+                        </div>
+
+                        <h2>System Health</h2>
+
+                        <p>
+                            Live status of ATUL infrastructure.
+                        </p>
+                    </div>
+
+                    <button
+                        class="button"
+                        id="healthRefreshBtn"
+                    >
+                        ↻ Check Health
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="healthCards"
+                    class="health-grid"
+                ></div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-title">
+                            Scheduler
+                        </div>
+
+                        <div
+                            id="schedulerDetails"
+                            class="detail-box"
+                        ></div>
+
+                    </div>
+
+                    <div class="panel">
+
+                        <div class="panel-title">
+                            Change Detection
+                        </div>
+
+                        <div
+                            id="changeDetails"
+                            class="detail-box"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SETTINGS
+                 ================================================= -->
+
+            <section
+                id="view-settings"
+                class="view"
+            >
+
+                <div class="section-heading">
+
+                    <div>
+                        <div class="eyebrow">
+                            PLATFORM CONFIGURATION
+                        </div>
+
+                        <h2>Settings</h2>
+
+                        <p>
+                            Local command center preferences.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-title">
+                            Connection
+                        </div>
+
+                        <label>
+                            Backend URL
+                            <input
+                                id="backendUrlInput"
+                                class="setting-input"
+                                value="http://127.0.0.1:8000"
+                            >
+                        </label>
+
+                        <button
+                            class="button primary"
+                            id="saveBackendUrl"
+                        >
+                            Save Backend URL
+                        </button>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-title">
+                            Automatic Refresh
+                        </div>
+
+                        <label>
+                            Refresh interval
+                            <select
+                                id="refreshInterval"
+                                class="setting-input"
+                            >
+                                <option value="10000">
+                                    10 seconds
+                                </option>
+
+                                <option
+                                    value="30000"
+                                    selected
+                                >
+                                    30 seconds
+                                </option>
+
+                                <option value="60000">
+                                    60 seconds
+                                </option>
+
+                                <option value="0">
+                                    Disabled
+                                </option>
+                            </select>
+                        </label>
+
+                        <button
+                            class="button"
+                            id="applyRefresh"
+                        >
+                            Apply
+                        </button>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-title">
+                            Platform
+                        </div>
+
+                        <div class="detail-box">
+                            <div>
+                                <span>Application</span>
+                                <strong>ATUL</strong>
+                            </div>
+
+                            <div>
+                                <span>Full Name</span>
+                                <strong>
+                                    Asset Tracking & Unified Logistics
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Frontend</span>
+                                <strong>
+                                    http://127.0.0.1:5500/
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>API Docs</span>
+                                <strong>
+                                    http://127.0.0.1:8000/docs
+                                </strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ============================================================
+     MODAL
+     ============================================================ -->
+
+<div
+    id="modalBackdrop"
+    class="modal-backdrop hidden"
+>
+
+    <div
+        id="modal"
+        class="modal"
+    >
+
+        <div class="modal-header">
+
+            <div>
+                <div
+                    id="modalEyebrow"
+                    class="eyebrow"
+                >
+                    ATUL
+                </div>
+
+                <h3 id="modalTitle">
+                    Details
+                </h3>
+            </div>
+
+            <button
+                id="modalClose"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            id="modalBody"
+            class="modal-body"
+        ></div>
+
+        <div
+            id="modalFooter"
+            class="modal-footer"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<div
+    id="toastContainer"
+    class="toast-container"
+></div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>

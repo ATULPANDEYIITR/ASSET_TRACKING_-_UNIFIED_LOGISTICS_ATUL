@@ -1,0 +1,17 @@
+services:
+  database:
+    image: postgres:17
+    container_name: atul-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: atul
+      POSTGRES_USER: atul
+      POSTGRES_PASSWORD: atul_dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - atul_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  atul_postgres_data:
+
